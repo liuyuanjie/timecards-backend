@@ -5,21 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Timecards.Domain;
 
-namespace Timecards.Application.Command
+namespace Timecards.Application.Command.Login
 {
-    public class LoginCommand : IRequest<IList<Claim>>
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
-
     public class LoginCommandHandler : IRequestHandler<LoginCommand, IList<Claim>>
     {
-        private readonly UserManager<Account> _userManager;
+        private readonly UserManager<Domain.Account> _userManager;
 
-        public LoginCommandHandler(UserManager<Account> userManager)
+        public LoginCommandHandler(UserManager<Domain.Account> userManager)
         {
             _userManager = userManager;
         }
