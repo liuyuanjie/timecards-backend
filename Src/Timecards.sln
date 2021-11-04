@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timecards", "Timecards\Time
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timecards.Domain", "Timecards.Domain\Timecards.Domain\Timecards.Domain.csproj", "{2D25605A-95A7-4098-9C39-B393F5A22E75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timecards.Application", "Timecards.Application\Timecards.Application.csproj", "{BAC5238E-BDAB-4653-B17F-16BD7C6D6ECE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,5 +16,11 @@ Global
 		{2374F7E2-5167-48A8-9F65-A30A909B8E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2374F7E2-5167-48A8-9F65-A30A909B8E61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2374F7E2-5167-48A8-9F65-A30A909B8E61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D25605A-95A7-4098-9C39-B393F5A22E75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D25605A-95A7-4098-9C39-B393F5A22E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC5238E-BDAB-4653-B17F-16BD7C6D6ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC5238E-BDAB-4653-B17F-16BD7C6D6ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC5238E-BDAB-4653-B17F-16BD7C6D6ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAC5238E-BDAB-4653-B17F-16BD7C6D6ECE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

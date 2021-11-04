@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Timecards.Common;
 
 namespace Timecards
 {
@@ -28,6 +29,8 @@ namespace Timecards
         {
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Timecards", Version = "v1"}); });
+            
+            services.AddSingleton<AppSettings>(new AppSettings(Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
