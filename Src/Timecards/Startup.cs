@@ -47,6 +47,8 @@ namespace Timecards
 
             app.UseHttpsRedirection();
 
+            app.UseExceptionHandler();
+            
             app.UseRouting();
 
             app.UseAuthorization();
