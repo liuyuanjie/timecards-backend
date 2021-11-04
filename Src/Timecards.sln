@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timecards", "Timecards\Timecards.csproj", "{2374F7E2-5167-48A8-9F65-A30A909B8E61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timecards.Domain", "Timecards.Domain\Timecards.Domain\Timecards.Domain.csproj", "{2D25605A-95A7-4098-9C39-B393F5A22E75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
