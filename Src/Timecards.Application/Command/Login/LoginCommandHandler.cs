@@ -21,15 +21,15 @@ namespace Timecards.Application.Command.Login
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null) return new List<Claim>();
-            
+
             var valid = await _userManager.CheckPasswordAsync(user, request.Password);
             if (!valid) return new List<Claim>();
-            
+
             var roleResult = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>()
             {
                 new(ClaimTypes.Name, user.UserName),
-                new(ClaimTypes.MobilePhone, user.PhoneNumber),
+                new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
                 new(ClaimTypes.Email, user.Email),
                 new(ClaimTypes.Sid, user.Id.ToString()),
             };

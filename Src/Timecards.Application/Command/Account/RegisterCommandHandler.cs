@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Timecards.Application.Command.Account
 {
-    public class AddAccountCommandHandler : IRequestHandler<AddAccountCommand, bool>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, bool>
     {
         private readonly UserManager<Domain.Account> _userManager;
 
-        public AddAccountCommandHandler(UserManager<Domain.Account> userManager)
+        public RegisterCommandHandler(UserManager<Domain.Account> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<bool> Handle(AddAccountCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             var newAccount = new Domain.Account
             {
@@ -26,8 +26,7 @@ namespace Timecards.Application.Command.Account
 
             if (!result.Succeeded) return false;
 
-            var roles = new List<string> {request.RoleType.ToString()};
-            var roleResult = await _userManager.AddToRolesAsync(newAccount, roles);
+            var roleResult = await _userManager.AddToRoleAsync(newAccount,request.RoleType.ToString());
 
             return roleResult.Succeeded;
         }
