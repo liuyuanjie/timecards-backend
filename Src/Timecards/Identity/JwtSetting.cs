@@ -1,9 +1,11 @@
+using Timecards.Common;
+
 namespace Timecards.Identity
 {
-    public class JwtSetting
+    public static class JwtSetting
     {
-        public string Key { get; set; }
-        public string Issuer { get; set; }
-        public string SecurityKey { get; set; }
+        public static int ExpiredDateInDay => int.Parse(AppSettings.Current["Jwt:ExpiredDateInDay"]);
+        public static string Issuer => AppSettings.Current["Jwt:Issuer"];
+        public static string SecurityKey => AppSettings.Current["Jwt:SecurityKey"];
     }
 }

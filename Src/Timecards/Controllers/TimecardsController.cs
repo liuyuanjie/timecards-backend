@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Timecards.Application.Command.Timecards;
 using Timecards.Application.Model;
@@ -11,6 +12,7 @@ namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class TimecardsController : ControllerBase
     {
         private readonly IMediator _mediator;

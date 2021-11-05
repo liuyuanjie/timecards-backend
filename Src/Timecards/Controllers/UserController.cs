@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Timecards.Application.Command.Account;
 using Timecards.Application.Command.User;
@@ -12,6 +13,8 @@ namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
+    [Route("Admin")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -25,7 +28,7 @@ namespace Timecards.Controllers
         [Route("{accountId}")]
         public async Task<IActionResult> Delete(Guid accountId)
         {
-            var result = await _mediator.Send(new DeleteUserCommand()
+            var result = await _mediator.Send(new DeleteUserCommand
             {
                 AccountId = accountId
             });
