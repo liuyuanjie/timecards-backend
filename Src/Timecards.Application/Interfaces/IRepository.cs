@@ -11,6 +11,8 @@ namespace Timecards.Application.Interfaces
         IUnitOfWork UnitOfWork { get; }
         IQueryable<TEntity> Query();
         void Delete(TEntity aggregateRoot);
+        
+        Task CreateAsync(TEntity aggregateRoot);
         Task CreateAsync(IEnumerable<TEntity> aggregateRoots);
     }
 }

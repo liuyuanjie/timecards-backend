@@ -17,12 +17,14 @@ namespace Timecards.Application.Command.Timecards
 
         public async Task<bool> Handle(CreateTimecardsCommand request, CancellationToken cancellationToken)
         {
-            var timecards = request.Timecardses.Select(x =>
-                Domain.Timecards.CreateTimecardsRecord(request.AccountId, x.WorkDay, x.Hour, x.Note, x.TimecardsType));
+            var timecards = Domain.Timecards.CreateTimecards(request.AccountId, request.Timecards.ProjectId,
+                request.Timecards.TimecardsDate);
+            request.Timecards.Items.ToList().ForEach(x =>
+                timecards.AddTimecardsRecord(x.WorkDay, x.Hour, x.Note));
 
             await _repository.CreateAsync(timecards);
             var result = await _repository.UnitOfWork.CommitAsync(cancellationToken);
-            
+
             return result > 0;
         }
     }

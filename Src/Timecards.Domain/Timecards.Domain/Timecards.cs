@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using Timecards.Domain.Enum;
 
 namespace Timecards.Domain
@@ -6,22 +7,26 @@ namespace Timecards.Domain
     public class Timecards : EntityBase
     {
         public Guid AccountId { get; set; }
-        public DateTime WorkDay { get; set; }
-        public decimal Hour { get; set; }
-        public string Note { get; set; }
-        public TimecardsType TimecardsType { get; set; }
+        public Guid ProjectId { get; set; }
+        public DateTime TimecardsDate { get; set; }
+        
+        public virtual List<TimecardsItem> Items { get; set; }
 
-        public static Timecards CreateTimecardsRecord(Guid accountId, DateTime workDay, decimal hour, string note,
-            TimecardsType timecardsType)
+        public static Timecards CreateTimecards(Guid accountId, Guid projectId, DateTime timecardsDate)
         {
-            return new Timecards
+            return new Timecards()
             {
                 AccountId = accountId,
-                WorkDay = workDay,
-                Hour = hour,
-                Note = note,
-                TimecardsType = timecardsType
+                ProjectId = projectId,
+                TimecardsDate = timecardsDate
             };
+        }
+
+        public void AddTimecardsRecord(DateTime workDay, decimal hour, string note)
+        {
+            Items ??= new List<TimecardsItem>();
+
+            Items.Add(new TimecardsItem(Id, workDay, hour, note));
         }
     }
 }

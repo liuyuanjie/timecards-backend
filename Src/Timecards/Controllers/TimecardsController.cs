@@ -33,10 +33,10 @@ namespace Timecards.Controllers
 
         [HttpPost]
         [Route("{accountId}")]
-        public async Task<IActionResult> SaveTimecards(Guid accountId, List<TimecardsModel> timecards)
+        public async Task<IActionResult> SaveTimecards(Guid accountId, TimecardsModel timecards)
         {
             var result = await _mediator.Send(
-                new CreateTimecardsCommand() {AccountId = accountId, Timecardses = timecards});
+                new CreateTimecardsCommand {AccountId = accountId, Timecards = timecards});
 
             return result ? Ok() : BadRequest();
         }
