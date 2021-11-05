@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Timecards.Application.Extensions;
 using Timecards.Common;
+using Timecards.Identity;
 
 namespace Timecards
 {
@@ -31,7 +32,8 @@ namespace Timecards
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Timecards", Version = "v1"}); });
             
-            services.AddSingleton<AppSettings>(new AppSettings(Configuration));
+            services.AddSingleton(new AppSettings(Configuration));
+            services.AddAuthenticationJwt();
             services.AddApplicationServices();
         }
 
