@@ -25,8 +25,8 @@ namespace Timecards.Controllers
         public async Task<IActionResult> Register(RegisterCommand registerCommand)
         {
             var result = await _mediator.Send(registerCommand);
-            
-            return result ? Ok() : BadRequest();
+
+            return result ? Ok() : BadRequest("Failed to register.");
         }
     }
 }

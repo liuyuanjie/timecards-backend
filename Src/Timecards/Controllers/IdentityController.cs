@@ -28,7 +28,7 @@ namespace Timecards.Controllers
                 return Ok(JwtTokenGenerator.Generator(command));
             }
             
-            return BadRequest();
+            return BadRequest("Failed to login.");
         }
     }
 }

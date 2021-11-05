@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Timecards.Application.Exceptions;
 
 namespace Timecards.Application.Command.Login
 {
@@ -20,10 +21,10 @@ namespace Timecards.Application.Command.Login
         public async Task<IList<Claim>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null) return new List<Claim>();
+            if (user == null) throw new ApiCustomException("InvalidLogin", "Failed to login.");
 
-            var valid = await _userManager.CheckPasswordAsync(user, request.Password);
-            if (!valid) return new List<Claim>();
+            var isSuccess = await _userManager.CheckPasswordAsync(user, request.Password);
+            if (!isSuccess) throw new ApiCustomException("InvalidLogin", "Failed to login.");
 
             var roleResult = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>()

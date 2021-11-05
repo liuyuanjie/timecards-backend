@@ -13,8 +13,7 @@ namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
-    [Route("Admin")]
+    [Authorize("Admin")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -25,20 +24,20 @@ namespace Timecards.Controllers
         }
         
         [HttpDelete]
-        [Route("{accountId}")]
-        public async Task<IActionResult> Delete(Guid accountId)
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _mediator.Send(new DeleteUserCommand
             {
-                AccountId = accountId
+                AccountId = id
             });
             
-            return result ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest("Failed to delete.");
         }
 
         [HttpGet]
-        [Route("search")]
-        public async Task<IList<AccountModel>> Search(string userName, string email, string phoneNumber)
+        [Route("")]
+        public async Task<IList<AccountModel>> GetAll(string userName, string email, string phoneNumber)
         {
             var result = await _mediator.Send(new GetAccountQuery
             {

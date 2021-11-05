@@ -10,7 +10,6 @@ namespace Timecards.Application.Model
         public DateTime WorkDay { get; set; }
         public decimal Hour { get; set; }
         public string Note { get; set; }
-        public TimecardsType TimecardsType { get; set; }
     }
 
     public class TimecardsModel

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -17,7 +18,7 @@ namespace Timecards.Application.Command.User
         public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByIdAsync(request.AccountId.ToString());
-            if (user == null) return false;
+            if (user == null) throw new KeyNotFoundException();
 
             var result = await _userManager.DeleteAsync(user);
 

@@ -20,7 +20,7 @@ namespace Timecards.Infrastructure.EF
             return _dbContext.Set<TEntity>();
         }
 
-        public void Create(TEntity entity)
+        public void Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
         }

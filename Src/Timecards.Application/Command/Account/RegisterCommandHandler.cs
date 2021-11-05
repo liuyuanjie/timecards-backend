@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Timecards.Application.Exceptions;
 
 namespace Timecards.Application.Command.Account
 {
@@ -17,6 +18,18 @@ namespace Timecards.Application.Command.Account
 
         public async Task<bool> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
+            var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
+            if (userWithSameUserName != null)
+            {
+                throw new ApiCustomException("InvalidUserName", $"Username {request.UserName} is already taken.");
+            }
+
+            var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
+            if (userWithSameEmail != null)
+            {
+                throw new ApiCustomException("InvalidEmail", $"Email {request.Email} is already taken.");
+            }
+
             var newAccount = new Domain.Account
             {
                 UserName = request.UserName,
@@ -26,7 +39,7 @@ namespace Timecards.Application.Command.Account
 
             if (!result.Succeeded) return false;
 
-            var roleResult = await _userManager.AddToRoleAsync(newAccount,request.RoleType.ToString());
+            var roleResult = await _userManager.AddToRoleAsync(newAccount, request.RoleType.ToString());
 
             return roleResult.Succeeded;
         }

@@ -8,6 +8,6 @@ namespace Timecards.Application.Interfaces
         IUnitOfWork UnitOfWork { get; }
         IQueryable<TEntity> Query();
         void Delete(TEntity entity);
-        void Create(TEntity entity);
+        void Add(TEntity entity);
     }
 }

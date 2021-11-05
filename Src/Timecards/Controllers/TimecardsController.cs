@@ -40,7 +40,7 @@ namespace Timecards.Controllers
             var result = await _mediator.Send(
                 new CreateTimecardsCommand {AccountId = accountId, Timecards = timecards});
 
-            return result ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest("Failed to save timecards.");
         }
     }
 }
