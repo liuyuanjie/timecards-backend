@@ -10,17 +10,12 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Timecards.Application\Timecards.Application.csproj" />
       <ProjectReference Include="..\Timecards.Domain\Timecards.Domain\Timecards.Domain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Microsoft.EntityFrameworkCore.SqlServer, Version=5.0.11.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-        <HintPath>..\..\..\..\..\.nuget\packages\microsoft.entityframeworkcore.sqlserver\5.0.11\lib\netstandard2.1\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
 </Project>
