@@ -1,8 +1,7 @@
 using System;
 using MediatR;
-using Timecards.Domain;
 
-namespace Timecards.Application.Command
+namespace Timecards.Application.Command.Account
 {
     public class DeleteAccountCommand : IRequest<bool>
     {

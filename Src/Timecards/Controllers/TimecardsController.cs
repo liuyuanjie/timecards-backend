@@ -7,7 +7,7 @@ using Timecards.Application.Command.Timecards;
 using Timecards.Application.Model;
 using Timecards.Application.Query.Timecards;
 
-namespace Timecards.Controller
+namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]

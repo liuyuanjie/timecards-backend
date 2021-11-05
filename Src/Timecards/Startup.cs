@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Timecards.Application.Extensions;
 using Timecards.Common;
 using Timecards.Identity;
+using Timecards.Middlewares;
 
 namespace Timecards
 {
@@ -49,7 +50,7 @@ namespace Timecards
 
             app.UseHttpsRedirection();
 
-            app.UseExceptionHandler();
+            app.UseSystemExceptionHandler();
             
             app.UseRouting();
 

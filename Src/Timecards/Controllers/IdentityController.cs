@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Timecards.Application.Command;
-using Timecards.Common;
+using Microsoft.AspNetCore.Mvc;
+using Timecards.Application.Command.Login;
+using Timecards.Identity;
 
-namespace Timecards.Controller
+namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -27,6 +27,7 @@ namespace Timecards.Controller
             {
                 return Ok(JwtTokenGenerator.Generator(command));
             }
+            
             return BadRequest();
         }
     }

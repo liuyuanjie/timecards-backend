@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Timecards.Application.Command;
 using Timecards.Application.Command.Account;
 using Timecards.Application.Model;
 using Timecards.Application.Query.Account;
 
-namespace Timecards.Controller
+namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -26,6 +25,7 @@ namespace Timecards.Controller
         public async Task<IActionResult> Create(AddAccountCommand addAccountCommand)
         {
             var result = await _mediator.Send(addAccountCommand);
+            
             return result ? Ok() : BadRequest();
         }
 
@@ -37,6 +37,7 @@ namespace Timecards.Controller
             {
                 AccountId = accountId
             });
+            
             return result ? Ok() : BadRequest();
         }
 

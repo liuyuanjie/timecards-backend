@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using MediatR;
 
-namespace Timecards.Application.Command
+namespace Timecards.Application.Command.Login
 {
     public class LoginCommand : IRequest<IList<Claim>>
     {

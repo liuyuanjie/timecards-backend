@@ -4,8 +4,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Timecards.Common;
 
-namespace Timecards.Common
+namespace Timecards.Identity
 {
     public static class JwtTokenGenerator
     {

@@ -10,13 +10,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Timecards.Middlewares
 {
-    public class ExceptionHandlerMiddleware
+    public class SystemExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
+        private readonly ILogger<SystemExceptionHandlerMiddleware> _logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next,
-            ILogger<ExceptionHandlerMiddleware> logger)
+        public SystemExceptionHandlerMiddleware(RequestDelegate next,
+            ILogger<SystemExceptionHandlerMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -44,11 +44,11 @@ namespace Timecards.Middlewares
         }
     }
 
-    public static class ErrorHandlerExtension
+    public static class SystemExceptionHandlerExtension
     {
-        public static void UseErrorHandler(this IApplicationBuilder applicationBuilder)
+        public static void UseSystemExceptionHandler(this IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseMiddleware<ExceptionHandlerMiddleware>();
+            applicationBuilder.UseMiddleware<SystemExceptionHandlerMiddleware>();
         }
     }
 }

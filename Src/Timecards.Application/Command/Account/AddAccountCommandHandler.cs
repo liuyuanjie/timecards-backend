@@ -23,12 +23,12 @@ namespace Timecards.Application.Command.Account
                 Email = request.Email,
             };
             var result = await _userManager.CreateAsync(newAccount, request.Password);
-            
+
             if (!result.Succeeded) return false;
-            
+
             var roles = new List<string> {request.RoleType.ToString()};
             var roleResult = await _userManager.AddToRolesAsync(newAccount, roles);
-            
+
             return roleResult.Succeeded;
         }
     }
