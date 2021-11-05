@@ -22,7 +22,7 @@ namespace Timecards.Application.Command.Timecards
             request.Timecards.Items.ToList().ForEach(x =>
                 timecards.AddTimecardsRecord(x.WorkDay, x.Hour, x.Note));
 
-            await _repository.CreateAsync(timecards);
+            _repository.Create(timecards);
             var result = await _repository.UnitOfWork.CommitAsync(cancellationToken);
 
             return result > 0;

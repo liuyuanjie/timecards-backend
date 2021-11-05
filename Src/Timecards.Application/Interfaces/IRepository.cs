@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Timecards.Domain;
 
 namespace Timecards.Application.Interfaces
@@ -10,9 +7,7 @@ namespace Timecards.Application.Interfaces
     {
         IUnitOfWork UnitOfWork { get; }
         IQueryable<TEntity> Query();
-        void Delete(TEntity aggregateRoot);
-        
-        Task CreateAsync(TEntity aggregateRoot);
-        Task CreateAsync(IEnumerable<TEntity> aggregateRoots);
+        void Delete(TEntity entity);
+        void Create(TEntity entity);
     }
 }
