@@ -10,7 +10,7 @@ using Timecards.Domain;
 
 namespace Timecards.Application.Query.Timecards
 {
-    public class GetTimecardsQueryHandler : IRequestHandler<GetTimecardsQuery, IList<TimecardsModel>>
+    public class GetTimecardsQueryHandler : IRequestHandler<GetTimecardsQuery, IList<GetTimecardsResponse>>
     {
         private readonly IRepository<Domain.Timecards> _repository;
 
@@ -19,17 +19,17 @@ namespace Timecards.Application.Query.Timecards
             _repository = repository;
         }
 
-        public async Task<IList<TimecardsModel>> Handle(GetTimecardsQuery request, CancellationToken cancellationToken)
+        public async Task<IList<GetTimecardsResponse>> Handle(GetTimecardsQuery request, CancellationToken cancellationToken)
         {
             return await _repository
                 .Query()
                 .Where(x => x.AccountId == request.AccountId && x.TimecardsDate == request.StartDate)
                 .Include(x => x.Items)
-                .Select(x => new TimecardsModel()
+                .Select(x => new GetTimecardsResponse()
                 {
                     ProjectId = x.ProjectId,
                     TimecardsDate = x.TimecardsDate,
-                    Items = x.Items.Select(t => new TimecardsItemModel
+                    Items = x.Items.Select(t => new GetTimecardsItemResponse
                     {
                         Hour = t.Hour,
                         WorkDay = t.WorkDay,

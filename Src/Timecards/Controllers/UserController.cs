@@ -37,7 +37,7 @@ namespace Timecards.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IList<AccountModel>> GetAll(string userName, string email, string phoneNumber)
+        public async Task<IList<GetAllUsersResponse>> GetAll(string userName, string email, string phoneNumber)
         {
             var result = await _mediator.Send(new GetAccountQuery
             {

@@ -9,7 +9,7 @@ using Timecards.Application.Model;
 
 namespace Timecards.Application.Query.Account
 {
-    public class GetAccountQueryHandler : IRequestHandler<GetAccountQuery, IList<AccountModel>>
+    public class GetAccountQueryHandler : IRequestHandler<GetAccountQuery, IList<GetAllUsersResponse>>
     {
         private readonly UserManager<Domain.Account> _userManager;
 
@@ -18,12 +18,12 @@ namespace Timecards.Application.Query.Account
             _userManager = userManager;
         }
 
-        public async Task<IList<AccountModel>> Handle(GetAccountQuery request, CancellationToken cancellationToken)
+        public async Task<IList<GetAllUsersResponse>> Handle(GetAccountQuery request, CancellationToken cancellationToken)
         {
             return await _userManager.Users
-                .Select(x => new AccountModel
+                .Select(x => new GetAllUsersResponse
                 {
-                    AccountId = x.Id,
+                    UserId = x.Id,
                     FullName = x.UserName,
                     Email = x.Email,
                     PhoneNumber = x.PhoneNumber,

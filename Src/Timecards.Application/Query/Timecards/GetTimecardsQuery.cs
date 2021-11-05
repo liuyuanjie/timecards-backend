@@ -5,7 +5,7 @@ using Timecards.Application.Model;
 
 namespace Timecards.Application.Query.Timecards
 {
-    public class GetTimecardsQuery : IRequest<IList<TimecardsModel>>
+    public class GetTimecardsQuery : IRequest<IList<GetTimecardsResponse>>
     {
         public Guid AccountId { get; set; }
         public DateTime StartDate { get; set; }

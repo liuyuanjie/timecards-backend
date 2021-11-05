@@ -24,7 +24,7 @@ namespace Timecards.Controllers
 
         [HttpGet]
         [Route("{accountId}")]
-        public async Task<IList<TimecardsModel>> GetTimecards(Guid accountId, [FromQuery] DateTime startDate,
+        public async Task<IList<GetTimecardsResponse>> GetTimecards(Guid accountId, [FromQuery] DateTime startDate,
             [FromQuery] DateTime endDate)
         {
             var result = await _mediator.Send(
@@ -35,10 +35,10 @@ namespace Timecards.Controllers
 
         [HttpPost]
         [Route("{accountId}")]
-        public async Task<IActionResult> SaveTimecards(Guid accountId, TimecardsModel timecards)
+        public async Task<IActionResult> SaveTimecards(Guid accountId, AddTimecardsCommand command)
         {
-            var result = await _mediator.Send(
-                new CreateTimecardsCommand {AccountId = accountId, Timecards = timecards});
+            command.AccountId = accountId;
+            var result = await _mediator.Send(command);
 
             return result ? Ok() : BadRequest("Failed to save timecards.");
         }
