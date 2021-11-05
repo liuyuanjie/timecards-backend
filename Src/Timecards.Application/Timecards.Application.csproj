@@ -14,4 +14,8 @@
       <ProjectReference Include="..\Timecards.Domain\Timecards.Domain\Timecards.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Model" />
+    </ItemGroup>
+
 </Project>

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using MediatR;
-using Timecards.Application.Model;
 
 namespace Timecards.Application.Command.Timecards
 {

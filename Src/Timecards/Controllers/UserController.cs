@@ -8,6 +8,7 @@ using Timecards.Application.Command.Account;
 using Timecards.Application.Command.User;
 using Timecards.Application.Model;
 using Timecards.Application.Query.Account;
+using Timecards.Application.Query.User;
 
 namespace Timecards.Controllers
 {
@@ -39,7 +40,7 @@ namespace Timecards.Controllers
         [Route("")]
         public async Task<IList<GetAllUsersResponse>> GetAll(string userName, string email, string phoneNumber)
         {
-            var result = await _mediator.Send(new GetAccountQuery
+            var result = await _mediator.Send(new GetUserQuery
             {
                 FullName = userName,
                 Email = email,

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using MediatR;
 using Timecards.Application.Model;
 
-namespace Timecards.Application.Query.Account
+namespace Timecards.Application.Query.User
 {
-    public class GetAccountQuery : IRequest<IList<GetAllUsersResponse>>
+    public class GetUserQuery : IRequest<IList<GetAllUsersResponse>>
     {
         public string FullName { get; set; }
         public string Email { get; set; }

@@ -6,10 +6,11 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Timecards.Application.Model;
+using Timecards.Application.Query.User;
 
 namespace Timecards.Application.Query.Account
 {
-    public class GetAccountQueryHandler : IRequestHandler<GetAccountQuery, IList<GetAllUsersResponse>>
+    public class GetAccountQueryHandler : IRequestHandler<GetUserQuery, IList<GetAllUsersResponse>>
     {
         private readonly UserManager<Domain.Account> _userManager;
 
@@ -18,7 +19,7 @@ namespace Timecards.Application.Query.Account
             _userManager = userManager;
         }
 
-        public async Task<IList<GetAllUsersResponse>> Handle(GetAccountQuery request, CancellationToken cancellationToken)
+        public async Task<IList<GetAllUsersResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             return await _userManager.Users
                 .Select(x => new GetAllUsersResponse

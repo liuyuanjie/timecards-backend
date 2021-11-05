@@ -1,6 +1,6 @@
 using System;
 
-namespace Timecards.Application.Model
+namespace Timecards.Application.Query.User
 {
     public class GetAllUsersResponse
     {
