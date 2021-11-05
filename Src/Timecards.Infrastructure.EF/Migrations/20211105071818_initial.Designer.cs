@@ -10,7 +10,7 @@ using Timecards.Infrastructure.EF;
 namespace Timecards.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(TimecardsDbContext))]
-    [Migration("20211105063740_initial")]
+    [Migration("20211105071818_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

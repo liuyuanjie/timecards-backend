@@ -3,18 +3,18 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace Timecards.Application.Command.Account
+namespace Timecards.Application.Command.User
 {
-    public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand, bool>
+    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
     {
         private readonly UserManager<Domain.Account> _userManager;
 
-        public DeleteAccountCommandHandler(UserManager<Domain.Account> userManager)
+        public DeleteUserCommandHandler(UserManager<Domain.Account> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<bool> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByIdAsync(request.AccountId.ToString());
             if (user == null) return false;
