@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Timecards.Application.Extensions;
 using Timecards.Application.Interfaces;
 using Timecards.Application.Model;
 using Timecards.Domain;
@@ -19,15 +21,18 @@ namespace Timecards.Application.Query.Timecards
             _repository = repository;
         }
 
-        public async Task<IList<GetTimecardsResponse>> Handle(GetTimecardsQuery request, CancellationToken cancellationToken)
+        public async Task<IList<GetTimecardsResponse>> Handle(GetTimecardsQuery request,
+            CancellationToken cancellationToken)
         {
+            var mondayOfWeekOfWorkDay = request.WorkDay.GetFirstDayOfWeek();
             return await _repository
                 .Query()
                 .AsNoTracking()
-                .Where(x => x.AccountId == request.AccountId && x.TimecardsDate == request.StartDate)
+                .Where(x => x.AccountId == request.UserId && x.TimecardsDate == mondayOfWeekOfWorkDay)
                 .Include(x => x.Items)
                 .Select(x => new GetTimecardsResponse()
                 {
+                    UserId = x.AccountId,
                     ProjectId = x.ProjectId,
                     TimecardsDate = x.TimecardsDate,
                     Items = x.Items.Select(t => new GetTimecardsItemResponse

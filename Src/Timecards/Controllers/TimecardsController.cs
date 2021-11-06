@@ -23,21 +23,20 @@ namespace Timecards.Controllers
         }
 
         [HttpGet]
-        [Route("{userId}")]
-        public async Task<IList<GetTimecardsResponse>> GetTimecards(Guid userId, [FromQuery] DateTime startDate,
-            [FromQuery] DateTime endDate)
+        [Route("")]
+        public async Task<IList<GetTimecardsResponse>> GetTimecards([FromQuery] Guid userId,
+            [FromQuery] DateTime workDay)
         {
             var result = await _mediator.Send(
-                new GetTimecardsQuery {AccountId = userId, StartDate = startDate, EndDate = endDate});
+                new GetTimecardsQuery {UserId = userId, WorkDay = workDay});
 
             return result;
         }
 
         [HttpPost]
-        [Route("{userId}")]
-        public async Task<IActionResult> SaveTimecards(Guid userId, AddTimecardsCommand command)
+        [Route("")]
+        public async Task<IActionResult> SaveTimecards(AddTimecardsCommand command)
         {
-            command.UserId = userId;
             var result = await _mediator.Send(command);
 
             return result ? Ok() : BadRequest("Failed to save timecards.");

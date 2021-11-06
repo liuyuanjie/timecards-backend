@@ -14,6 +14,7 @@ namespace Timecards.Application.Model
 
     public class GetTimecardsResponse
     {
+        public Guid UserId { get; set; }
         public Guid ProjectId { get; set; }
         public DateTime TimecardsDate { get; set; }
         public IEnumerable<GetTimecardsItemResponse> Items { get; set; }
