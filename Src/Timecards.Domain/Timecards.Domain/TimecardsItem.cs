@@ -10,9 +10,8 @@ namespace Timecards.Domain
         public decimal Hour { get; set; }
         public string Note { get; set; }
 
-        public TimecardsItem(Guid timecardsId, DateTime workDay, decimal hour, string note)
+        public TimecardsItem(DateTime workDay, decimal hour, string note)
         {
-            TimecardsId = timecardsId;
             WorkDay = workDay;
             Hour = hour;
             Note = note;
