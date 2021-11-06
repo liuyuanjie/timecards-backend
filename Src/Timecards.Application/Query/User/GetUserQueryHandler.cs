@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Timecards.Application.Model;
-using Timecards.Application.Query.User;
 
-namespace Timecards.Application.Query.Account
+namespace Timecards.Application.Query.User
 {
     public class GetAccountQueryHandler : IRequestHandler<GetUserQuery, IList<GetAllUsersResponse>>
     {

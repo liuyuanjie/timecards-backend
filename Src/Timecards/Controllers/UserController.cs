@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Timecards.Application.Command.Account;
 using Timecards.Application.Command.User;
 using Timecards.Application.Model;
-using Timecards.Application.Query.Account;
 using Timecards.Application.Query.User;
 
 namespace Timecards.Controllers

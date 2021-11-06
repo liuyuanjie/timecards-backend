@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Timecards.Application.Command.Account;
 using Timecards.Application.Model;
-using Timecards.Application.Query.Account;
 
 namespace Timecards.Controllers
 {
