@@ -21,10 +21,10 @@ namespace Timecards.Application.Command.Login
         public async Task<IList<Claim>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null) throw new ApiCustomException("InvalidLogin", "Failed to login.");
+            if (user == null) throw new InvalidIdentityException();
 
             var isSuccess = await _userManager.CheckPasswordAsync(user, request.Password);
-            if (!isSuccess) throw new ApiCustomException("InvalidLogin", "Failed to login.");
+            if (!isSuccess) throw new InvalidIdentityException();
 
             var roleResult = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>()
