@@ -10,7 +10,6 @@ namespace Timecards.Infrastructure.EF.EntityConfigurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedNever();
-            builder.Property(x => x.TimecardsId).IsRequired();
             builder.Property(x => x.Hour).HasPrecision(3, 1);
             builder.Property(x => x.WorkDay);
             builder.Property(x => x.Note).HasMaxLength(256);

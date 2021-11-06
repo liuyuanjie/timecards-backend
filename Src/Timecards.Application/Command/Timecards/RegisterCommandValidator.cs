@@ -7,20 +7,12 @@ namespace Timecards.Application.Command.Timecards
     {
         public AddTimecardsCommandValidator()
         {
-            RuleFor(c => c.AccountId).NotEmpty();
-            RuleFor(c => c.GetTimecards).SetValidator(new AddTimecardsValidator());
-        }
-    }
-
-    public class AddTimecardsValidator : AbstractValidator<AddTimecards>
-    {
-        public AddTimecardsValidator()
-        {
+            RuleFor(c => c.UserId).NotEmpty();
             RuleFor(c => c.ProjectId).NotEmpty();
             RuleFor(c => c.TimecardsDate).NotEmpty().Must(s => (DateTime.Now - s).Days <= 31);
             RuleForEach(c => c.Items).SetValidator(c => new AddTimecardsItemValidator(c.TimecardsDate));
         }
-
+        
         private class AddTimecardsItemValidator : AbstractValidator<AddTimecardsItem>
         {
             public AddTimecardsItemValidator(DateTime timecardsDate)

@@ -14,7 +14,7 @@ namespace Timecards.Infrastructure.EF.EntityConfigurations
             builder.Property(x => x.TimecardsDate).IsRequired();
             builder.HasMany(b => b.Items)
                 .WithOne()
-                .HasForeignKey(nameof(Domain.Timecards.Id))
+                .HasForeignKey(nameof(Domain.TimecardsItem.TimecardsId))
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

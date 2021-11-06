@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timecards.Infrastructure.EF;
 
 namespace Timecards.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(TimecardsDbContext))]
-    partial class TimecardsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211106092958_fix-timecardsItme")]
+    partial class fixtimecardsItme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,8 +295,6 @@ namespace Timecards.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TimecardsId");
-
                     b.ToTable("TimecardsItem");
                 });
 
@@ -353,7 +353,7 @@ namespace Timecards.Infrastructure.EF.Migrations
                 {
                     b.HasOne("Timecards.Domain.Timecards", null)
                         .WithMany("Items")
-                        .HasForeignKey("TimecardsId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

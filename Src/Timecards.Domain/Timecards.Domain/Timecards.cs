@@ -26,7 +26,7 @@ namespace Timecards.Domain
         {
             Items ??= new List<TimecardsItem>();
 
-            Items.Add(new TimecardsItem(Id, workDay, hour, note));
+            Items.Add(new TimecardsItem(workDay, hour, note));
         }
     }
 }
