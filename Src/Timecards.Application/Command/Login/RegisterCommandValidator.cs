@@ -1,0 +1,15 @@
+using FluentValidation;
+
+namespace Timecards.Application.Command.Account
+{
+    public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
+    {
+        public RegisterCommandValidator()
+        {
+            RuleFor(c => c.UserName).MinimumLength(6).MaximumLength(20).NotEmpty();
+            RuleFor(c => c.Email).EmailAddress().NotEmpty();
+            RuleFor(c => c.Password).Equal(c => c.ConfirmPassword).MinimumLength(4);
+            RuleFor(x => x.RoleType).IsInEnum();
+        }
+    }
+}
