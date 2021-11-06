@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -58,7 +59,8 @@ namespace Timecards.Middlewares
                 default:
                     // unhandled error
                     response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                    responseErrorMessage = new ResponseErrorMessage("ApplicationServerTrouble", "Timecards Application Server Is In Trouble.");
+                    responseErrorMessage = new ResponseErrorMessage("ApplicationServerTrouble",
+                        "Timecards Application Server Is In Trouble.");
                     break;
             }
 

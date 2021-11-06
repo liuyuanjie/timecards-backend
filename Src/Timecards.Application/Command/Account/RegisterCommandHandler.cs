@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -18,18 +19,6 @@ namespace Timecards.Application.Command.Account
 
         public async Task<bool> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
-            if (userWithSameUserName != null)
-            {
-                throw new ApiCustomException("InvalidUserName", $"Username {request.UserName} is already taken.");
-            }
-
-            var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
-            if (userWithSameEmail != null)
-            {
-                throw new ApiCustomException("InvalidEmail", $"Email {request.Email} is already taken.");
-            }
-
             var newAccount = new Domain.Account
             {
                 UserName = request.UserName,
@@ -37,10 +26,13 @@ namespace Timecards.Application.Command.Account
             };
             var result = await _userManager.CreateAsync(newAccount, request.Password);
 
-            if (!result.Succeeded) return false;
+            if (!result.Succeeded)
+                throw IdentityFailureExceptionFactory.Create(result.Errors.ToList());
 
             var roleResult = await _userManager.AddToRoleAsync(newAccount, request.RoleType.ToString());
-
+            if (!roleResult.Succeeded)
+                throw IdentityFailureExceptionFactory.Create(result.Errors.ToList());
+            
             return roleResult.Succeeded;
         }
     }
