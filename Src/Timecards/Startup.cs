@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +40,10 @@ namespace Timecards
             services.AddApplicationServices();
             services.AddRepositories();
             services.AddControllers();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("HasViewUserPermission", policy => policy.RequireRole("Admin"));
+            });
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Timecards", Version = "v1"}); });
         }
 

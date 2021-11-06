@@ -4,16 +4,14 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Timecards.Application.Command.Account;
 using Timecards.Application.Command.User;
-using Timecards.Application.Model;
 using Timecards.Application.Query.User;
 
 namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize("Admin")]
+    [Authorize("HasViewUserPermission")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -2,32 +2,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Timecards.Application.Interfaces;
 
 namespace Timecards.Application.Query.User
 {
     public class GetAccountQueryHandler : IRequestHandler<GetUserQuery, IList<GetAllUsersResponse>>
     {
-        private readonly UserManager<Domain.Account> _userManager;
+        private readonly IConnection _connection;
 
-        public GetAccountQueryHandler(UserManager<Domain.Account> userManager)
+        public GetAccountQueryHandler(IConnection connection)
         {
-            _userManager = userManager;
+            _connection = connection;
         }
 
         public async Task<IList<GetAllUsersResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            return await _userManager.Users
-                .Select(x => new GetAllUsersResponse
-                {
-                    UserId = x.Id,
-                    FullName = x.UserName,
-                    Email = x.Email,
-                    PhoneNumber = x.PhoneNumber,
-                })
-                .ToListAsync(cancellationToken: cancellationToken);
+            var searchUser = @"SELECT 
+                               u.[Id] AS [UserId],
+                               u.[UserName] AS [FullName],
+                               u.[Email] AS [Email],
+                               r.[Name] AS [Role]
+                        FROM [AspNetUsers] AS u 
+                        INNER JOIN [AspNetUserRoles] AS ur ON u.[Id] = ur.[UserId] 
+                        INNER JOIN [AspNetRoles] AS r ON ur.[RoleId] = r.[Id]";
+            
+            using (var conn = _connection.OpenConnection())
+            {
+                var result = await conn.QueryAsync<GetAllUsersResponse>(searchUser);
+                return result.ToList();
+            }
         }
     }
 }
