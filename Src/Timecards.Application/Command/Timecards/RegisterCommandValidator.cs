@@ -20,14 +20,14 @@ namespace Timecards.Application.Command.Timecards
             RuleFor(c => c.TimecardsDate).NotEmpty().Must(s => (DateTime.Now - s).Days <= 31);
             RuleForEach(c => c.Items).SetValidator(c => new AddTimecardsItemValidator(c.TimecardsDate));
         }
-    }
 
-    public class AddTimecardsItemValidator : AbstractValidator<AddTimecardsItem>
-    {
-        public AddTimecardsItemValidator(DateTime startDate)
+        private class AddTimecardsItemValidator : AbstractValidator<AddTimecardsItem>
         {
-            RuleFor(c => c.Hour).GreaterThanOrEqualTo(0).LessThanOrEqualTo(24);
-            RuleFor(c => c.WorkDay).NotEmpty().InclusiveBetween(startDate, startDate.AddDays(7));
+            public AddTimecardsItemValidator(DateTime timecardsDate)
+            {
+                RuleFor(c => c.Hour).GreaterThanOrEqualTo(0).LessThanOrEqualTo(24);
+                RuleFor(c => c.WorkDay).NotEmpty().InclusiveBetween(timecardsDate, timecardsDate.AddDays(7));
+            }
         }
     }
 }

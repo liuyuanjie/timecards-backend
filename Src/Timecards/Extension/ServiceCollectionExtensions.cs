@@ -12,6 +12,7 @@ namespace Timecards.Extension
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, TimecardsDbContext>();
+            services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             return services;
         }
