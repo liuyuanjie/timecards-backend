@@ -23,6 +23,7 @@ namespace Timecards.Application.Query.Timecards
         {
             return await _repository
                 .Query()
+                .AsNoTracking()
                 .Where(x => x.AccountId == request.AccountId && x.TimecardsDate == request.StartDate)
                 .Include(x => x.Items)
                 .Select(x => new GetTimecardsResponse()
