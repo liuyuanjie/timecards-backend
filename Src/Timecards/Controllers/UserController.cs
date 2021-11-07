@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Timecards.Application.Command.User;
 using Timecards.Application.Query.User;
+using Timecards.Identity;
 
 namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize("HasViewUserPermission")]
+    [Authorize(ApplicationAuthorization.HasViewUserPermission)]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

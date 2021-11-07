@@ -8,7 +8,7 @@ namespace Timecards.Identity
 {
     public static class JwtAuthentication
     {
-        public static void AddAuthenticationJwt(this IServiceCollection services)
+        public static void AddJwtAuthentication(this IServiceCollection services)
         {
             services.AddAuthentication(auth =>
                 {

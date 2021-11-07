@@ -36,14 +36,11 @@ namespace Timecards
             
             services.AddTimecardsIdentity();
             services.AddSingleton(new AppSettings(Configuration));
-            services.AddAuthenticationJwt();
+            services.AddJwtAuthentication();
             services.AddApplicationServices();
             services.AddRepositories();
             services.AddControllers();
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("HasViewUserPermission", policy => policy.RequireRole("Admin"));
-            });
+            services.AddApplicationAuthorization();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Timecards", Version = "v1"}); });
         }
 

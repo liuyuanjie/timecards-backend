@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Timecards.Application.Model;
 using Timecards.Application.Query.Project;
-using Timecards.Application.Query.Timecards;
 
 namespace Timecards.Controllers
 {
