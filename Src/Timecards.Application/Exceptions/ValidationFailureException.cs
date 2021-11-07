@@ -16,15 +16,11 @@ namespace Timecards.Application.Exceptions
     {
         public static ValidationFailureException Create(List<ValidationFailure> errors)
         {
-            return new ValidationFailureException("ValidationFailure",
-                JsonSerializer.Serialize(errors.Select(x =>
-                    new
-                    {
-                        SubErrorCode = x.ErrorCode,
-                        SubErrorMessage = x.ErrorMessage
-                    })
-                )
-            );
+            return new ValidationFailureException("ValidationFailure", "Invalid input")
+            {
+                SubErrorMessages = errors.Select(x =>
+                    new KeyValuePair<string, string>(x.ErrorCode, x.ErrorMessage)).ToList()
+            };
         }
     }
 }

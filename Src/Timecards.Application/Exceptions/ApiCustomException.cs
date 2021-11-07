@@ -14,5 +14,7 @@ namespace Timecards.Application.Exceptions
         {
             ErrorCode = code;
         }
+
+        public List<KeyValuePair<string, string>> SubErrorMessages { get; set; }
     }
 }

@@ -18,15 +18,11 @@ namespace Timecards.Application.Exceptions
     {
         public static IdentityFailureException Create(List<IdentityError> errors)
         {
-            return new IdentityFailureException("IdentityFailure",
-                JsonSerializer.Serialize(errors.Select(x =>
-                    new
-                    {
-                        SubErrorCode = x.Code,
-                        SubErrorMessage = x.Description
-                    })
-                )
-            );
+            return new IdentityFailureException("IdentityFailure", "Invalid input.")
+            {
+                SubErrorMessages = errors.Select(x =>
+                    new KeyValuePair<string, string>(x.Code, x.Description)).ToList()
+            };
         }
     }
 }

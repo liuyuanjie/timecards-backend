@@ -47,7 +47,10 @@ namespace Timecards.Middlewares
                 case ApiCustomException ex:
                     // custom application error
                     response.StatusCode = (int) HttpStatusCode.BadRequest;
-                    responseErrorMessage = new ResponseErrorMessage(ex.ErrorCode, ex.Message);
+                    responseErrorMessage = new ResponseErrorMessage(ex.ErrorCode, ex.Message)
+                    {
+                        SubErrorMessage = ex.SubErrorMessages
+                    };
                     break;
 
                 case KeyNotFoundException ex:
@@ -78,6 +81,8 @@ namespace Timecards.Middlewares
 
         public string ErrorCode { get; set; }
         public string ErrorMessage { get; set; }
+
+        public List<KeyValuePair<string, string>> SubErrorMessage { get; set; }
     }
 
     public static class SystemExceptionHandlerExtension
