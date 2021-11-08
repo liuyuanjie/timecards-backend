@@ -10,15 +10,15 @@ namespace Timecards.Controllers
     [Route("[controller]")]
     [ApiController]
     [Authorize]
-    public class Project : ControllerBase
+    public class ProjectsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public Project(IMediator mediator)
+        public ProjectsController(IMediator mediator)
         {
             _mediator = mediator;
         }
-        
+
         [HttpGet]
         [Route("")]
         public async Task<IList<GetProjectResponse>> GetProjects(string name)
