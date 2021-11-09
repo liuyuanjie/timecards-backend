@@ -32,6 +32,8 @@ namespace Timecards.Application.Command.Login
                 new(ClaimTypes.Name, user.UserName),
                 new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
                 new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.GivenName, user.FirstName ?? string.Empty),
+                new(ClaimTypes.Surname, user.LastName ?? string.Empty),
                 new(ClaimTypes.Sid, user.Id.ToString()),
             };
             claims.AddRange(roleResult.Select(role => new Claim(ClaimTypes.Role, role)));

@@ -21,7 +21,7 @@ namespace Timecards.Controllers
         {
             _mediator = mediator;
         }
-        
+
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(Guid id)
@@ -30,17 +30,19 @@ namespace Timecards.Controllers
             {
                 AccountId = id
             });
-            
+
             return result ? Ok() : BadRequest("Failed to delete.");
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<IList<GetAllUsersResponse>> GetAll(string userName, string email, string phoneNumber)
+        public async Task<IList<GetAllUsersResponse>> GetAll(string firstName, string lastName, string email,
+            string phoneNumber)
         {
             var result = await _mediator.Send(new GetUserQuery
             {
-                FullName = userName,
+                FirstName = firstName,
+                LastName = lastName,
                 Email = email,
                 PhoneNumber = phoneNumber
             });

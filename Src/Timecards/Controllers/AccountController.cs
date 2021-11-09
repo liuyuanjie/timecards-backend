@@ -22,7 +22,7 @@ namespace Timecards.Controllers
         {
             var result = await _mediator.Send(registerCommand);
 
-            return result ? Ok() : BadRequest("Failed to register.");
+            return Created(result.UserId.ToString(), result);
         }
     }
 }

@@ -21,8 +21,10 @@ namespace Timecards.Application.Query.User
         {
             var searchUser = @"SELECT 
                                    u.[Id] AS [UserId],
-                                   u.[UserName] AS [FullName],
-                                   u.[Email] AS [Email],
+                                   u.[UserName],
+                                   u.[Email],
+                                   u.[FirstName],
+                                   u.[LastName]
                                    r.[Name] AS [Role]
                                 FROM [AspNetUsers] AS u 
                                 INNER JOIN [AspNetUserRoles] AS ur ON u.[Id] = ur.[UserId] 
