@@ -20,13 +20,13 @@ namespace Timecards.Application.Query.User
         public async Task<IList<GetAllUsersResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var searchUser = @"SELECT 
-                               u.[Id] AS [UserId],
-                               u.[UserName] AS [FullName],
-                               u.[Email] AS [Email],
-                               r.[Name] AS [Role]
-                        FROM [AspNetUsers] AS u 
-                        INNER JOIN [AspNetUserRoles] AS ur ON u.[Id] = ur.[UserId] 
-                        INNER JOIN [AspNetRoles] AS r ON ur.[RoleId] = r.[Id]";
+                                   u.[Id] AS [UserId],
+                                   u.[UserName] AS [FullName],
+                                   u.[Email] AS [Email],
+                                   r.[Name] AS [Role]
+                                FROM [AspNetUsers] AS u 
+                                INNER JOIN [AspNetUserRoles] AS ur ON u.[Id] = ur.[UserId] 
+                                INNER JOIN [AspNetRoles] AS r ON ur.[RoleId] = r.[Id]";
             
             using (var conn = _connection.OpenConnection())
             {

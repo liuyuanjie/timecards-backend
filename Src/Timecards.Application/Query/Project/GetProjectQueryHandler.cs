@@ -25,12 +25,12 @@ namespace Timecards.Application.Query.Project
             CancellationToken cancellationToken)
         {
             var searchProject = @"SELECT 
-                               p.[Id] AS [ProjectId],
-                               p.[Name] AS [Name],
-                               pt.[Name] AS [ParentName],
-                               p.[ProjectType] AS [ProjectType]
-                        FROM [Projects] AS p 
-                        LEFT JOIN [Projects] AS pt ON p.[Id] = pt.[ParentProjectId]";
+                                    p.[Id] AS [ProjectId],
+                                    p.[Name] AS [Name],
+                                    pt.[Name] AS [ParentName],
+                                    p.[ProjectType] AS [ProjectType]
+                                FROM [Projects] AS p 
+                                LEFT JOIN [Projects] AS pt ON p.[Id] = pt.[ParentProjectId]";
             
             using (var conn = _connection.OpenConnection())
             {
