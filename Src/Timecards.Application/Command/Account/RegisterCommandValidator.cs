@@ -6,6 +6,8 @@ namespace Timecards.Application.Command.Account
     {
         public RegisterCommandValidator()
         {
+            RuleFor(c => c.FirstName).NotEmpty().MaximumLength(20);
+            RuleFor(c => c.LastName).NotEmpty().MaximumLength(20);
             RuleFor(c => c.UserName).MinimumLength(6).MaximumLength(20).NotEmpty();
             RuleFor(c => c.Email).EmailAddress().NotEmpty();
             RuleFor(c => c.Password).Equal(c => c.ConfirmPassword).MinimumLength(4);

@@ -19,20 +19,46 @@ namespace Timecards.Application.Query.User
 
         public async Task<IList<GetAllUsersResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var searchUser = @"SELECT 
+            var searchQuery = @"SELECT 
                                    u.[Id] AS [UserId],
                                    u.[UserName],
                                    u.[Email],
                                    u.[FirstName],
-                                   u.[LastName]
+                                   u.[LastName],
                                    r.[Name] AS [Role]
                                 FROM [AspNetUsers] AS u 
                                 INNER JOIN [AspNetUserRoles] AS ur ON u.[Id] = ur.[UserId] 
                                 INNER JOIN [AspNetRoles] AS r ON ur.[RoleId] = r.[Id]";
-            
+
+            List<string> whereClause = new List<string>();
+            if (!string.IsNullOrWhiteSpace(request.Email))
+            {
+                whereClause.Add("u.[Email] = @email");
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.FirstName))
+            {
+                whereClause.Add("u.[FirstName] LIKE @firstName");
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.LastName))
+            {
+                whereClause.Add("u.[LastName] LIKE @lastName");
+            }
+
+            if (whereClause.Any())
+            {
+                searchQuery += $" WHERE {string.Join(" AND ", whereClause)} ";
+            }
+
             using (var conn = _connection.OpenConnection())
             {
-                var result = await conn.QueryAsync<GetAllUsersResponse>(searchUser);
+                var result = await conn.QueryAsync<GetAllUsersResponse>(searchQuery, new
+                {
+                    Email = request.Email,
+                    FirstName = $"%{request.FirstName}%",
+                    LastName = $"%{request.LastName}%",
+                });
                 return result.ToList();
             }
         }
