@@ -17,7 +17,7 @@ namespace Timecards.Controllers
         {
             _mediator = mediator;
         }
-        
+
         [HttpPost]
         [Route("token")]
         public async Task<IActionResult> Token(LoginCommand loginCommand)
@@ -25,9 +25,12 @@ namespace Timecards.Controllers
             var command = await _mediator.Send(loginCommand);
             if (command.Any())
             {
-                return Ok(JwtTokenGenerator.Generator(command));
+                return Ok(new
+                {
+                    Token = JwtTokenGenerator.Generator(command)
+                });
             }
-            
+
             return BadRequest("Failed to login.");
         }
     }

@@ -28,9 +28,10 @@ namespace Timecards.Application.Query.Project
                                     p.[Id] AS [ProjectId],
                                     p.[Name] AS [Name],
                                     pt.[Name] AS [ParentName],
-                                    p.[ProjectType] AS [ProjectType]
+                                    p.[ProjectType] AS [ProjectType],
+                                    p.[ParentProjectId]
                                 FROM [Projects] AS p 
-                                LEFT JOIN [Projects] AS pt ON p.[Id] = pt.[ParentProjectId]";
+                                LEFT JOIN [Projects] AS pt ON p.[ParentProjectId] = pt.[Id]";
             
             using (var conn = _connection.OpenConnection())
             {

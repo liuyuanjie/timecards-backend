@@ -8,6 +8,7 @@ namespace Timecards.Application.Query.Project
         public Guid ProjectId { get; set; }
         public string Name { get; set; }
         public string ParentName { get; set; }
-        public ProjectType ProjectType { get; set; }
+        public ProjectType ProjectType { get; set; }        
+        public Guid? ParentProjectId { get; set; }
     }
 }
