@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Timecards.Application.Extensions;
 using Timecards.Application.Interfaces;
 using Timecards.Domain;
 
@@ -38,9 +39,9 @@ namespace Timecards.Application.Command.Timecards
             }
 
             var timecards = Domain.Timecards.CreateTimecards(request.UserId, request.ProjectId,
-                request.TimecardsDate);
+                request.TimecardsDate.Date.GetFirstDayOfWeek());
             request.Items.ToList().ForEach(x =>
-                timecards.AddTimecardsRecord(x.WorkDay, x.Hour, x.Note));
+                timecards.AddTimecardsRecord(x.WorkDay.Date, x.Hour, x.Note));
 
             _repository.Add(timecards);
             var result = await _repository.UnitOfWork.CommitAsync(cancellationToken);

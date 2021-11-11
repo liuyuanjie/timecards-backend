@@ -36,7 +36,7 @@ namespace Timecards.Application.Tests
             var query = new GetTimecardsQuery
             {
                 UserId = _accountId,
-                WorkDay = _mondayInCurrentWeek
+                TimecardsDate = _mondayInCurrentWeek
             };
 
             var timecardses = new List<Domain.Timecards>
@@ -57,7 +57,7 @@ namespace Timecards.Application.Tests
             var query = new GetTimecardsQuery
             {
                 UserId = _accountId,
-                WorkDay = _mondayInCurrentWeek.AddDays(4)
+                TimecardsDate = _mondayInCurrentWeek.AddDays(4)
             };
 
             var timecardses = new List<Domain.Timecards>
@@ -78,7 +78,7 @@ namespace Timecards.Application.Tests
             var query = new GetTimecardsQuery
             {
                 UserId = _accountId,
-                WorkDay = _mondayInCurrentWeek.AddDays(6)
+                TimecardsDate = _mondayInCurrentWeek.AddDays(6)
             };
 
             var timecardses = new List<Domain.Timecards>
@@ -99,7 +99,7 @@ namespace Timecards.Application.Tests
             var query = new GetTimecardsQuery
             {
                 UserId = _accountId,
-                WorkDay = _mondayInCurrentWeek
+                TimecardsDate = _mondayInCurrentWeek
             };
 
             var timecardses = new List<Domain.Timecards>
@@ -123,7 +123,7 @@ namespace Timecards.Application.Tests
             var query = new GetTimecardsQuery
             {
                 UserId = _accountId,
-                WorkDay = _mondayInCurrentWeek.AddDays(6)
+                TimecardsDate = _mondayInCurrentWeek.AddDays(6)
             };
 
             var timecardses = new List<Domain.Timecards>
@@ -147,7 +147,7 @@ namespace Timecards.Application.Tests
             var query = new GetTimecardsQuery
             {
                 UserId = _accountId,
-                WorkDay = _mondayInCurrentWeek
+                TimecardsDate = _mondayInCurrentWeek
             };
 
             var timecardses = new List<Domain.Timecards>
@@ -170,7 +170,7 @@ namespace Timecards.Application.Tests
             var query = new GetTimecardsQuery
             {
                 UserId = _accountId,
-                WorkDay = _mondayInCurrentWeek
+                TimecardsDate = _mondayInCurrentWeek
             };
 
             var timecardses = new List<Domain.Timecards>
@@ -193,7 +193,7 @@ namespace Timecards.Application.Tests
             var query = new GetTimecardsQuery
             {
                 UserId = _accountId,
-                WorkDay = _mondayInCurrentWeek
+                TimecardsDate = _mondayInCurrentWeek
             };
 
             var timecardses = new List<Domain.Timecards>

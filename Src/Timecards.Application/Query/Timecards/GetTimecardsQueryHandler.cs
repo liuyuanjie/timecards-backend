@@ -24,11 +24,22 @@ namespace Timecards.Application.Query.Timecards
         public async Task<IList<GetTimecardsResponse>> Handle(GetTimecardsQuery request,
             CancellationToken cancellationToken)
         {
-            var mondayOfWeekOfWorkDay = request.WorkDay.GetFirstDayOfWeek();
-            return await _repository
+            var timecards = _repository
                 .Query()
-                .AsNoTracking()
-                .Where(x => x.AccountId == request.UserId && x.TimecardsDate == mondayOfWeekOfWorkDay)
+                .AsNoTracking();
+            
+            if (request.UserId.HasValue)
+            {
+                timecards = timecards.Where(x => x.AccountId == request.UserId);
+            }
+
+            if (request.TimecardsDate.HasValue)
+            {
+                var mondayOfWeekOfWorkDay = request.TimecardsDate.Value.GetFirstDayOfWeek();
+                timecards = timecards.Where(x => x.TimecardsDate == mondayOfWeekOfWorkDay);
+            }
+
+            return await timecards
                 .Include(x => x.Items)
                 .Select(x => new GetTimecardsResponse()
                 {
