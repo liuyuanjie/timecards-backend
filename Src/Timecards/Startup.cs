@@ -39,7 +39,11 @@ namespace Timecards
             services.AddJwtAuthentication();
             services.AddApplicationServices();
             services.AddRepositories();
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+                });
             services.AddApplicationAuthorization();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Timecards", Version = "v1"}); });
         }
