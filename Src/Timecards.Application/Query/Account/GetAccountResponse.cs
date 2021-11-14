@@ -1,10 +1,10 @@
 using System;
 
-namespace Timecards.Application.Query.User
+namespace Timecards.Application.Query.Account
 {
-    public class GetAllUsersResponse
+    public class GetAccountResponse
     {
-        public Guid UserId { get; set; }
+        public Guid AccountId { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

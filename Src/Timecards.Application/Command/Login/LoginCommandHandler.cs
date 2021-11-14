@@ -9,7 +9,7 @@ using Timecards.Application.Exceptions;
 
 namespace Timecards.Application.Command.Login
 {
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, IList<Claim>>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
     {
         private readonly UserManager<Domain.Account> _userManager;
 
@@ -18,7 +18,7 @@ namespace Timecards.Application.Command.Login
             _userManager = userManager;
         }
 
-        public async Task<IList<Claim>> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null) throw new InvalidIdentityException();
@@ -38,7 +38,11 @@ namespace Timecards.Application.Command.Login
             };
             claims.AddRange(roleResult.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            return claims;
+            return new LoginResponse()
+            {
+                AccountId = user.Id,
+                Claims = claims
+            };
         }
     }
 }
