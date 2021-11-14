@@ -23,15 +23,11 @@ namespace Timecards.Controllers
         public async Task<IActionResult> Token(LoginCommand loginCommand)
         {
             var command = await _mediator.Send(loginCommand);
-            if (command.Any())
+            return Ok(new
             {
-                return Ok(new
-                {
-                    Token = JwtTokenGenerator.Generator(command)
-                });
-            }
-
-            return BadRequest("Failed to login.");
+                Token = JwtTokenGenerator.Generator(command.Claims),
+                AccountId = command.AccountId
+            });
         }
     }
 }

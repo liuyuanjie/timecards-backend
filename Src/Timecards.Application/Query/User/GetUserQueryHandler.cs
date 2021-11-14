@@ -8,7 +8,7 @@ using Timecards.Application.Interfaces;
 
 namespace Timecards.Application.Query.User
 {
-    public class GetAccountQueryHandler : IRequestHandler<GetUserQuery, IList<GetAllUsersResponse>>
+    public class GetAccountQueryHandler : IRequestHandler<GetUserQuery, IList<GetUserResponse>>
     {
         private readonly IConnection _connection;
 
@@ -17,7 +17,7 @@ namespace Timecards.Application.Query.User
             _connection = connection;
         }
 
-        public async Task<IList<GetAllUsersResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        public async Task<IList<GetUserResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var searchQuery = @"SELECT 
                                    u.[Id] AS [UserId],
@@ -53,7 +53,7 @@ namespace Timecards.Application.Query.User
 
             using (var conn = _connection.OpenConnection())
             {
-                var result = await conn.QueryAsync<GetAllUsersResponse>(searchQuery, new
+                var result = await conn.QueryAsync<GetUserResponse>(searchQuery, new
                 {
                     Email = request.Email,
                     FirstName = $"%{request.FirstName}%",
