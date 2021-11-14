@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Timecards.Application.Extensions;
 using Timecards.Application.Interfaces;
 using Timecards.Domain;
@@ -38,15 +40,50 @@ namespace Timecards.Application.Command.Timecards
                 throw new KeyNotFoundException("Can't find the User.");
             }
 
-            var timecards = Domain.Timecards.CreateTimecards(request.UserId, request.ProjectId,
-                request.TimecardsDate.Date.GetFirstDayOfWeek());
-            request.Items.ToList().ForEach(x =>
-                timecards.AddTimecardsRecord(x.WorkDay.Date, x.Hour, x.Note));
+            var utcTimecardsDate = request.TimecardsDate.Date.GetFirstDayOfWeek().ToUniversalTime();
+            var existingTimecards = GetTimecards(request, utcTimecardsDate);
+            if (existingTimecards != null)
+            {
+                UpdateTimecards(request, existingTimecards);
+            }
+            else
+            {
+                AddTimecards(request, utcTimecardsDate);
+            }
 
-            _repository.Add(timecards);
             var result = await _repository.UnitOfWork.CommitAsync(cancellationToken);
 
             return result > 0;
+        }
+
+        private Domain.Timecards GetTimecards(AddTimecardsCommand request, DateTime utcTimecardsDate)
+        {
+            var existingTimecards = _repository.Query()
+                .Include(x => x.Items)
+                .FirstOrDefault(x =>
+                    x.AccountId == request.UserId &&
+                    x.ProjectId == request.ProjectId &&
+                    x.TimecardsDate == utcTimecardsDate);
+            
+            return existingTimecards;
+        }
+
+        private void AddTimecards(AddTimecardsCommand request, DateTime utcTimecardsDate)
+        {
+            var timecards = Domain.Timecards.CreateTimecards(request.UserId, request.ProjectId,
+                utcTimecardsDate);
+            request.Items.ToList().ForEach(x =>
+                timecards.AddTimecardsRecord(x.WorkDay.Date.ToUniversalTime(), x.Hour, x.Note));
+
+            _repository.Add(timecards);
+        }
+
+        private static void UpdateTimecards(AddTimecardsCommand request, Domain.Timecards existingTimecards)
+        {
+            request.Items.ToList().ForEach(x =>
+            {
+                existingTimecards.UpdateTimecardsItem(x.WorkDay.Date.ToUniversalTime(), x.Hour, x.Note);
+            });
         }
     }
 }

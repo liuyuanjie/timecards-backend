@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Timecards.Domain.Enum;
 
 namespace Timecards.Domain
@@ -9,9 +10,9 @@ namespace Timecards.Domain
         public Guid AccountId { get; set; }
         public Guid ProjectId { get; set; }
         public DateTime TimecardsDate { get; set; }
-        
-        public virtual List<TimecardsItem> Items { get; set; }
 
+        public virtual List<TimecardsItem> Items { get; set; }
+        
         public static Timecards CreateTimecards(Guid accountId, Guid projectId, DateTime timecardsDate)
         {
             return new Timecards()
@@ -20,6 +21,12 @@ namespace Timecards.Domain
                 ProjectId = projectId,
                 TimecardsDate = timecardsDate
             };
+        }
+
+        public void UpdateTimecardsItem(DateTime workDay, decimal hour, string note)
+        {
+            var existingItem = Items.FirstOrDefault(x => x.WorkDay == workDay);
+            existingItem?.UpdateTimecardsItem(workDay, hour, note);
         }
 
         public void AddTimecardsRecord(DateTime workDay, decimal hour, string note)

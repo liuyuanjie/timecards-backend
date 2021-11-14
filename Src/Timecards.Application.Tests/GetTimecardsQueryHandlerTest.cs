@@ -25,7 +25,7 @@ namespace Timecards.Application.Tests
             _timecardsRepositoryMock = new Mock<IRepository<Domain.Timecards>>();
             _accountId = new Guid("00000000-0000-0000-0000-00000000000a");
             _projectId = new Guid("00000000-0000-0000-0000-00000000000d");
-            _mondayInCurrentWeek = DateTime.Today.GetFirstDayOfWeek();
+            _mondayInCurrentWeek = DateTime.Today.ToUniversalTime().GetFirstDayOfWeek();
 
             _getTimecardsQueryHandler = new GetTimecardsQueryHandler(_timecardsRepositoryMock.Object);
         }

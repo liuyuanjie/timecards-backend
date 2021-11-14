@@ -35,7 +35,7 @@ namespace Timecards.Application.Query.Timecards
 
             if (request.TimecardsDate.HasValue)
             {
-                var mondayOfWeekOfWorkDay = request.TimecardsDate.Value.GetFirstDayOfWeek();
+                var mondayOfWeekOfWorkDay = request.TimecardsDate.Value.ToUniversalTime().GetFirstDayOfWeek();
                 timecards = timecards.Where(x => x.TimecardsDate == mondayOfWeekOfWorkDay);
             }
 

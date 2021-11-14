@@ -16,5 +16,12 @@ namespace Timecards.Domain
             Hour = hour;
             Note = note;
         }
+        
+        public void UpdateTimecardsItem(DateTime workDay, decimal hour, string note)
+        {
+            WorkDay = workDay;
+            Hour = hour;
+            Note = note;
+        }
     }
 }
