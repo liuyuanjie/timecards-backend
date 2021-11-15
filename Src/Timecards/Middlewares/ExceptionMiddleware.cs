@@ -73,6 +73,11 @@ namespace Timecards.Middlewares
 
     public class ResponseErrorMessage
     {
+        public ResponseErrorMessage(HttpStatusCode errorCode, string errorMessage)
+            : this(errorCode.ToString(), errorMessage)
+        {
+        }
+
         public ResponseErrorMessage(string errorCode, string errorMessage)
         {
             ErrorCode = errorCode;

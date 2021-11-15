@@ -41,7 +41,10 @@ namespace Timecards.Domain
 
         public void Approve()
         {
-            StatusType = TimecardsStatusType.Approved;
+            if (StatusType == TimecardsStatusType.Submitted)
+            {
+                StatusType = TimecardsStatusType.Approved;
+            }
         }
         
         public void Submit()
@@ -51,7 +54,10 @@ namespace Timecards.Domain
         
         public void Decline()
         {
-            StatusType = TimecardsStatusType.Denied;
+            if (StatusType == TimecardsStatusType.Submitted)
+            {
+                StatusType = TimecardsStatusType.Denied;
+            }
         }
     }
 }

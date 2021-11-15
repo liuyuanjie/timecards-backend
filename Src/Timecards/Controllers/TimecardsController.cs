@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using MediatR;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Timecards.Application.Command.Timecards;
 using Timecards.Application.Model;
 using Timecards.Application.Query.Timecards;
+using Timecards.Middlewares;
 
 namespace Timecards.Controllers
 {
@@ -42,14 +44,20 @@ namespace Timecards.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> SaveTimecards(AddTimecardsCommand command)
+        public async Task<IActionResult> SaveTimecards(List<AddTimecards> timecardses)
         {
-            _logger.LogInformation(System.Text.Json.JsonSerializer.Serialize(command));
-            var result = await _mediator.Send(command);
+            _logger.LogInformation(System.Text.Json.JsonSerializer.Serialize(timecardses));
+            var result = await _mediator.Send(new AddTimecardsCommand
+            {
+                Timecardses = timecardses
+            });
 
-            return result ? Ok() : BadRequest("Failed to save timecards.");
+            return result
+                ? Ok()
+                : BadRequest(
+                    new ResponseErrorMessage(HttpStatusCode.BadRequest, "Failed to save timecards."));
         }
-        
+
         [HttpDelete]
         [Route("{timecardsId}")]
         public async Task<IActionResult> DeleteTimecards(Guid timecardsId)
@@ -59,9 +67,12 @@ namespace Timecards.Controllers
                 TimecardsId = timecardsId
             });
 
-            return result ? Ok() : BadRequest("Failed to delete timecards.");
+            return result
+                ? Ok()
+                : BadRequest(
+                    new ResponseErrorMessage(HttpStatusCode.BadRequest, "Failed to delete timecards."));
         }
-        
+
         [HttpPost]
         [Route("submit")]
         public async Task<IActionResult> SubmitTimecards(List<Guid> timecardsIds)
@@ -71,9 +82,12 @@ namespace Timecards.Controllers
                 TimecardsIds = timecardsIds
             });
 
-            return result ? Ok() : BadRequest("Failed to approve timecardses.");
+            return result
+                ? Ok()
+                : BadRequest(
+                    new ResponseErrorMessage(HttpStatusCode.BadRequest, "Failed to submit timecards."));
         }
-        
+
         [HttpPost]
         [Route("approve")]
         public async Task<IActionResult> ApproveTimecards(List<Guid> timecardsIds)
@@ -83,9 +97,12 @@ namespace Timecards.Controllers
                 TimecardsIds = timecardsIds
             });
 
-            return result ? Ok() : BadRequest("Failed to approve timecardses.");
+            return result
+                ? Ok()
+                : BadRequest(
+                    new ResponseErrorMessage(HttpStatusCode.BadRequest, "Failed to approve timecards."));
         }
-        
+
         [HttpPost]
         [Route("decline")]
         public async Task<IActionResult> DeclineTimecards(List<Guid> timecardsIds)
@@ -95,7 +112,10 @@ namespace Timecards.Controllers
                 TimecardsIds = timecardsIds
             });
 
-            return result ? Ok() : BadRequest("Failed to decline timecardses.");
+            return result
+                ? Ok()
+                : BadRequest(
+                    new ResponseErrorMessage(HttpStatusCode.BadRequest, "Failed to decline timecards."));
         }
     }
 }

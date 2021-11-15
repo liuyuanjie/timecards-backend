@@ -26,9 +26,9 @@ namespace Timecards.Application.Command.Timecards
             var existingTimecardses = _repository.Query().Where(x => request.TimecardsIds.Contains(x.Id)).ToList();
             existingTimecardses.ForEach(x => x.Decline());
 
-            var result = await _repository.UnitOfWork.CommitAsync(cancellationToken);
+            await _repository.UnitOfWork.CommitAsync(cancellationToken);
 
-            return result > 0;
+            return true;
         }
     }
 }

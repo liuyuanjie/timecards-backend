@@ -12,14 +12,22 @@ namespace Timecards.Application.Command.Timecards
         public AddTimecardsCommandValidator(ILogger<AddTimecardsCommandValidator> logger)
         {
             _logger = logger;
-            RuleFor(c => c.UserId).NotEmpty();
-            RuleFor(c => c.ProjectId).NotEmpty();
-            RuleFor(c => c.TimecardsDate).NotEmpty().Must(s => (DateTime.Now - s).Days <= 31);
-            RuleForEach(c => c.Items).SetValidator(c =>
+            RuleForEach(c => c.Timecardses).SetValidator(c => new AddTimecardsValidator());
+        }
+
+        private class AddTimecardsValidator: AbstractValidator<AddTimecards>
+        {
+            public AddTimecardsValidator()
             {
-                var firstDayOfWeek = c.TimecardsDate.GetFirstDayOfWeek();
-                return new AddTimecardsItemValidator(firstDayOfWeek);
-            });
+                RuleFor(c => c.UserId).NotEmpty();
+                RuleFor(c => c.ProjectId).NotEmpty();
+                RuleFor(c => c.TimecardsDate).NotEmpty().Must(s => (DateTime.Now - s).Days <= 31);
+                RuleForEach(c => c.Items).SetValidator(c =>
+                {
+                    var firstDayOfWeek = c.TimecardsDate.GetFirstDayOfWeek();
+                    return new AddTimecardsItemValidator(firstDayOfWeek);
+                });   
+            }
         }
 
         private class AddTimecardsItemValidator : AbstractValidator<AddTimecardsItem>
