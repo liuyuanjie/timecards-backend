@@ -261,6 +261,9 @@ namespace Timecards.Infrastructure.EF.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<byte>("StatusType")
+                        .HasColumnType("tinyint");
+
                     b.Property<DateTime>("TimecardsDate")
                         .HasColumnType("datetime2");
 

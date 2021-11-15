@@ -13,13 +13,16 @@ namespace Timecards.Domain
 
         public virtual List<TimecardsItem> Items { get; set; }
         
+        public TimecardsStatusType StatusType { get; set; }
+        
         public static Timecards CreateTimecards(Guid accountId, Guid projectId, DateTime timecardsDate)
         {
             return new Timecards()
             {
                 AccountId = accountId,
                 ProjectId = projectId,
-                TimecardsDate = timecardsDate
+                TimecardsDate = timecardsDate,
+                StatusType = TimecardsStatusType.Saved
             };
         }
 
@@ -34,6 +37,21 @@ namespace Timecards.Domain
             Items ??= new List<TimecardsItem>();
 
             Items.Add(new TimecardsItem(workDay, hour, note));
+        }
+
+        public void Approve()
+        {
+            StatusType = TimecardsStatusType.Approved;
+        }
+        
+        public void Submit()
+        {
+            StatusType = TimecardsStatusType.Submitted;
+        }
+        
+        public void Decline()
+        {
+            StatusType = TimecardsStatusType.Denied;
         }
     }
 }

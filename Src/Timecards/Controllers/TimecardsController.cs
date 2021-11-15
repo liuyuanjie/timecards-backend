@@ -49,5 +49,53 @@ namespace Timecards.Controllers
 
             return result ? Ok() : BadRequest("Failed to save timecards.");
         }
+        
+        [HttpDelete]
+        [Route("{timecardsId}")]
+        public async Task<IActionResult> DeleteTimecards(Guid timecardsId)
+        {
+            var result = await _mediator.Send(new DeleteTimecardsCommand
+            {
+                TimecardsId = timecardsId
+            });
+
+            return result ? Ok() : BadRequest("Failed to delete timecards.");
+        }
+        
+        [HttpPost]
+        [Route("submit")]
+        public async Task<IActionResult> SubmitTimecards(List<Guid> timecardsIds)
+        {
+            var result = await _mediator.Send(new SubmitTimecardsCommand
+            {
+                TimecardsIds = timecardsIds
+            });
+
+            return result ? Ok() : BadRequest("Failed to approve timecardses.");
+        }
+        
+        [HttpPost]
+        [Route("approve")]
+        public async Task<IActionResult> ApproveTimecards(List<Guid> timecardsIds)
+        {
+            var result = await _mediator.Send(new ApproveTimecardsCommand
+            {
+                TimecardsIds = timecardsIds
+            });
+
+            return result ? Ok() : BadRequest("Failed to approve timecardses.");
+        }
+        
+        [HttpPost]
+        [Route("decline")]
+        public async Task<IActionResult> DeclineTimecards(List<Guid> timecardsIds)
+        {
+            var result = await _mediator.Send(new DeclineTimecardsCommand
+            {
+                TimecardsIds = timecardsIds
+            });
+
+            return result ? Ok() : BadRequest("Failed to decline timecardses.");
+        }
     }
 }
