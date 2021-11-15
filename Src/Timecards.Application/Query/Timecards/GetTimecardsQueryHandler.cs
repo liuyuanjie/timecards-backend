@@ -47,6 +47,7 @@ namespace Timecards.Application.Query.Timecards
                     ProjectId = x.ProjectId,
                     TimecardsDate = x.TimecardsDate,
                     TimecardsId = x.Id,
+                    StatusType = x.StatusType,
                     Items = x.Items.Select(t => new GetTimecardsItemResponse
                     {
                         Hour = t.Hour,

@@ -18,6 +18,8 @@ namespace Timecards.Application.Model
         public Guid ProjectId { get; set; }
         public Guid TimecardsId { get; set; }
         public DateTime TimecardsDate { get; set; }
+        
+        public TimecardsStatusType StatusType { get; set; }
         public IEnumerable<GetTimecardsItemResponse> Items { get; set; }
     }
 }
