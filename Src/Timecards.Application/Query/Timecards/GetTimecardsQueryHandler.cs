@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Timecards.Application.Extensions;
 using Timecards.Application.Interfaces;
 using Timecards.Application.Model;
@@ -15,10 +17,14 @@ namespace Timecards.Application.Query.Timecards
     public class GetTimecardsQueryHandler : IRequestHandler<GetTimecardsQuery, IList<GetTimecardsResponse>>
     {
         private readonly IRepository<Domain.Timecards> _repository;
+        private readonly IRepository<Domain.Project> _projectRepository;
+        private readonly UserManager<Domain.Account> _userManager;
 
-        public GetTimecardsQueryHandler(IRepository<Domain.Timecards> repository)
+        public GetTimecardsQueryHandler(IRepository<Domain.Timecards> repository,
+            IRepository<Domain.Project> projectRepository)
         {
             _repository = repository;
+            _projectRepository = projectRepository;
         }
 
         public async Task<IList<GetTimecardsResponse>> Handle(GetTimecardsQuery request,
@@ -26,8 +32,9 @@ namespace Timecards.Application.Query.Timecards
         {
             var timecards = _repository
                 .Query()
+                .OrderBy(x => x.CreatedDate)
                 .AsNoTracking();
-            
+
             if (request.UserId.HasValue)
             {
                 timecards = timecards.Where(x => x.AccountId == request.UserId);
@@ -41,20 +48,28 @@ namespace Timecards.Application.Query.Timecards
 
             return await timecards
                 .Include(x => x.Items)
-                .Select(x => new GetTimecardsResponse()
-                {
-                    UserId = x.AccountId,
-                    ProjectId = x.ProjectId,
-                    TimecardsDate = x.TimecardsDate,
-                    TimecardsId = x.Id,
-                    StatusType = x.StatusType,
-                    Items = x.Items.Select(t => new GetTimecardsItemResponse
-                    {
-                        Hour = t.Hour,
-                        WorkDay = t.WorkDay,
-                        Note = t.Note
-                    })
-                })
+                .GroupJoin(
+                    _projectRepository.Query(),
+                    timecards => timecards.ProjectId,
+                    project => project.Id,
+                    (timecards, project) => new {Timecards = timecards, project}
+                ).SelectMany(
+                    x => x.project.DefaultIfEmpty(), (timecards, project) =>
+                        new GetTimecardsResponse()
+                        {
+                            UserId = timecards.Timecards.AccountId,
+                            ProjectId = timecards.Timecards.ProjectId,
+                            ProjectName = project != null ? project.Name : null,
+                            TimecardsDate = timecards.Timecards.TimecardsDate,
+                            TimecardsId = timecards.Timecards.Id,
+                            StatusType = timecards.Timecards.StatusType,
+                            Items = timecards.Timecards.Items.Select(t => new GetTimecardsItemResponse
+                            {
+                                Hour = t.Hour,
+                                WorkDay = t.WorkDay,
+                                Note = t.Note
+                            })
+                        })
                 .ToListAsync(cancellationToken: cancellationToken);
         }
     }

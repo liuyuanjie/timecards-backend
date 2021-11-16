@@ -16,9 +16,9 @@ namespace Timecards.Application.Model
     {
         public Guid UserId { get; set; }
         public Guid ProjectId { get; set; }
+        public string ProjectName { get; set; }
         public Guid TimecardsId { get; set; }
         public DateTime TimecardsDate { get; set; }
-        
         public TimecardsStatusType StatusType { get; set; }
         public IEnumerable<GetTimecardsItemResponse> Items { get; set; }
     }

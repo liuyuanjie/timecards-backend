@@ -7,6 +7,7 @@ using Moq;
 using Timecards.Application.Extensions;
 using Timecards.Application.Interfaces;
 using Timecards.Application.Query.Timecards;
+using Timecards.Domain;
 using Xunit;
 
 namespace Timecards.Application.Tests
@@ -14,6 +15,7 @@ namespace Timecards.Application.Tests
     public class GetTimecardsQueryHandlerTest
     {
         private readonly Mock<IRepository<Domain.Timecards>> _timecardsRepositoryMock;
+        private readonly Mock<IRepository<Domain.Project>> _projectRepositoryMock;
         private readonly GetTimecardsQueryHandler _getTimecardsQueryHandler;
         private readonly Guid _accountId;
         private readonly Guid _projectId;
@@ -22,12 +24,23 @@ namespace Timecards.Application.Tests
 
         public GetTimecardsQueryHandlerTest()
         {
+            _projectRepositoryMock = new Mock<IRepository<Project>>();
             _timecardsRepositoryMock = new Mock<IRepository<Domain.Timecards>>();
             _accountId = new Guid("00000000-0000-0000-0000-00000000000a");
             _projectId = new Guid("00000000-0000-0000-0000-00000000000d");
             _mondayInCurrentWeek = DateTime.Today.ToUniversalTime().GetFirstDayOfWeek();
 
-            _getTimecardsQueryHandler = new GetTimecardsQueryHandler(_timecardsRepositoryMock.Object);
+            _getTimecardsQueryHandler =
+                new GetTimecardsQueryHandler(_timecardsRepositoryMock.Object, _projectRepositoryMock.Object);
+            _projectRepositoryMock.Setup(x => x.Query())
+                .Returns(new List<Project>
+                {
+                    new Project
+                    {
+                        Id = _projectId,
+                        Name = "Test Project"
+                    }
+                }.AsQueryable());
         }
 
         [Fact]
@@ -92,9 +105,10 @@ namespace Timecards.Application.Tests
 
             Assert.Equal(1, result.Count());
         }
-        
+
         [Fact]
-        public async void Should_Return_Correct_Timecards_Has_Before_And_After_Weeks_Timecards_Given_AccountId_Then_Monday()
+        public async void
+            Should_Return_Correct_Timecards_Has_Before_And_After_Weeks_Timecards_Given_AccountId_Then_Monday()
         {
             var query = new GetTimecardsQuery
             {
@@ -116,9 +130,10 @@ namespace Timecards.Application.Tests
             Assert.Equal(1, result.Count());
             Assert.Equal(_mondayInCurrentWeek, result.First().TimecardsDate.GetFirstDayOfWeek());
         }
-        
+
         [Fact]
-        public async void Should_Return_Correct_Timecards_Has_Before_And_After_Weeks_Timecards_Given_AccountId_Then_Sunday()
+        public async void
+            Should_Return_Correct_Timecards_Has_Before_And_After_Weeks_Timecards_Given_AccountId_Then_Sunday()
         {
             var query = new GetTimecardsQuery
             {
@@ -140,9 +155,10 @@ namespace Timecards.Application.Tests
             Assert.Equal(1, result.Count());
             Assert.Equal(_mondayInCurrentWeek, result.First().TimecardsDate.GetFirstDayOfWeek());
         }
-        
+
         [Fact]
-        public async void Should_Return_Correct_Timecards_When_Has_Other_Accounts_Timecards_Given_AccountId_Then_Monday()
+        public async void
+            Should_Return_Correct_Timecards_When_Has_Other_Accounts_Timecards_Given_AccountId_Then_Monday()
         {
             var query = new GetTimecardsQuery
             {
@@ -165,7 +181,8 @@ namespace Timecards.Application.Tests
         }
 
         [Fact]
-        public async void Should_Return_Correct_Timecards_When_Has_Multiple_Timecards_One_Week_Given_AccountId_Then_Monday()
+        public async void
+            Should_Return_Correct_Timecards_When_Has_Multiple_Timecards_One_Week_Given_AccountId_Then_Monday()
         {
             var query = new GetTimecardsQuery
             {
@@ -186,9 +203,10 @@ namespace Timecards.Application.Tests
 
             Assert.Equal(3, result.Count());
         }
-        
+
         [Fact]
-        public async void Should_Return_Correct_Timecards_When_Has_Multiple_Timecards_One_Week_And_Other_Accounts_Given_AccountId_Then_Monday()
+        public async void
+            Should_Return_Correct_Timecards_When_Has_Multiple_Timecards_One_Week_And_Other_Accounts_Given_AccountId_Then_Monday()
         {
             var query = new GetTimecardsQuery
             {
