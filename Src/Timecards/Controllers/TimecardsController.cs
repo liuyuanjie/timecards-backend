@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Timecards.Application.Command.Timecards;
 using Timecards.Application.Model;
 using Timecards.Application.Query.Timecards;
+using Timecards.Identity;
 using Timecards.Middlewares;
 
 namespace Timecards.Controllers
@@ -90,6 +91,7 @@ namespace Timecards.Controllers
 
         [HttpPost]
         [Route("approve")]
+        [Authorize(ApplicationAuthorization.HasAdminPermission)]
         public async Task<IActionResult> ApproveTimecards(List<Guid> timecardsIds)
         {
             var result = await _mediator.Send(new ApproveTimecardsCommand
@@ -105,6 +107,7 @@ namespace Timecards.Controllers
 
         [HttpPost]
         [Route("decline")]
+        [Authorize(ApplicationAuthorization.HasAdminPermission)]
         public async Task<IActionResult> DeclineTimecards(List<Guid> timecardsIds)
         {
             var result = await _mediator.Send(new DeclineTimecardsCommand

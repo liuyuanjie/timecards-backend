@@ -12,7 +12,7 @@ namespace Timecards.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize(ApplicationAuthorization.HasViewUserPermission)]
+    [Authorize(ApplicationAuthorization.HasAdminPermission)]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
