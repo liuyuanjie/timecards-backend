@@ -18,7 +18,6 @@ namespace Timecards.Application.Query.Timecards
     {
         private readonly IRepository<Domain.Timecards> _repository;
         private readonly IRepository<Domain.Project> _projectRepository;
-        private readonly UserManager<Domain.Account> _userManager;
 
         public GetTimecardsQueryHandler(IRepository<Domain.Timecards> repository,
             IRepository<Domain.Project> projectRepository)
