@@ -4,7 +4,7 @@ namespace Timecards.Identity
 {
     public static class ApplicationAuthorization
     {
-        public const string HasAdminPermission = "HasViewUserPermission";
+        public const string HasAdminPermission = "HasAdminPermission";
 
         public static void AddApplicationAuthorization(this IServiceCollection services)
         {

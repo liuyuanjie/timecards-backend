@@ -37,8 +37,18 @@ namespace Timecards.Controllers
             var getTimecardsQuery = new GetTimecardsQuery {UserId = userId, TimecardsDate = timecardsDate};
             _logger.LogInformation(System.Text.Json.JsonSerializer.Serialize(getTimecardsQuery));
 
-            var result = await _mediator.Send(
-                getTimecardsQuery);
+            var result = await _mediator.Send(getTimecardsQuery);
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<IList<SearchTimecardsResponse>> SearchTimecards()
+        {
+            var searchTimecardsQuery = new SearchTimecardsQuery();
+
+            var result = await _mediator.Send(searchTimecardsQuery);
 
             return result;
         }

@@ -1,16 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Timecards.Application.Extensions;
 using Timecards.Application.Interfaces;
 using Timecards.Application.Model;
-using Timecards.Domain;
 
 namespace Timecards.Application.Query.Timecards
 {

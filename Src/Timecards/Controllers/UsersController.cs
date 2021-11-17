@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Timecards.Application.Command.User;
 using Timecards.Application.Query.User;
 using Timecards.Identity;
+using Timecards.Middlewares;
 
 namespace Timecards.Controllers
 {
@@ -31,7 +33,10 @@ namespace Timecards.Controllers
                 AccountId = id
             });
 
-            return result ? Ok() : BadRequest("Failed to delete.");
+            return result
+                ? Ok()
+                : BadRequest(
+                    new ResponseErrorMessage(HttpStatusCode.BadRequest, "Failed to delete."));
         }
 
         [HttpGet]
